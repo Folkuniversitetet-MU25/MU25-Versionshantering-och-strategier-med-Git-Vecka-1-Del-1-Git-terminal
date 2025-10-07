@@ -27,6 +27,22 @@ Fokus: grunder i Git via **terminal** (Git Bash("Linux-miljö")/macOS). Repon, s
 - Autentisering mot GitHub (PAT eller SSH)
 - Editor/IDE (VS Code rekommenderas)
 
-## Tips
-- En commit = en logisk ändring.  
-- Meddelanden i stil med `feat: add intro section to README` räcker långt.
+## Konventioner för commit-meddelanden (enkelt)
+- Skriv kort och i imperativ: “add”, “fix”, “update”.
+- Exempel: `feat: add welcome section to README`
+- Håll en commit till **en logisk ändring**.
+
+## Troubleshooting (vanligt)
+- `fatal: not a git repository` → Kör kommandot i rätt mapp (där `.git/` finns) eller kör `git init`.
+- `Permission denied (publickey)` → SSH-nyckel saknas/fel; följ GitHubs SSH-guide. Alternativt kör HTTPS + PAT.
+- `Support for password authentication was removed` → Använd **PAT (HTTPS)** eller **SSH-nyckel** (lösenord funkar inte längre).
+- Konstiga radbrytningar (Windows/macOS) → Sätt `core.autocrlf`:
+  - Windows: `git config --global core.autocrlf true`
+  - macOS/Linux: `git config --global core.autocrlf input`
+
+### Bonus: global ignore & credential helper
+- Global ignore (OS/IDE-filer):  
+  ```bash
+  echo ".DS_Store" >> ~/.gitignore_global
+  git config --global core.excludesFile ~/.gitignore_global
+```
