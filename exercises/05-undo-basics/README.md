@@ -37,5 +37,8 @@ git reset HEAD~1
 ```
 
 ## Checklista
+- [ ] Jag använder `commit --amend` **bara före första push** (för att rätta senaste commit).
+- [ ] Om något redan är pushat: jag använder **`git revert`** (inte reset) för att ångra säkert i delad historik.
+- [ ] Jag kör **aldrig** `git reset --hard` på pushad historik.
 - [ ] Du kan förklara när restore, amend och reset är lämpliga
 - [ ] Du vet att reset --hard aldrig ska användas på pushad historik
