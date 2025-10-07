@@ -41,8 +41,13 @@ Fokus: grunder i Git via **terminal** (Git Bash("Linux-miljö")/macOS). Repon, s
   - macOS/Linux: `git config --global core.autocrlf input`
 
 ### Bonus: global ignore & credential helper
-- Global ignore (OS/IDE-filer):  
-  ```bash
+- Global ignore (OS/IDE-filer):
+```bash
   echo ".DS_Store" >> ~/.gitignore_global
   git config --global core.excludesFile ~/.gitignore_global
 ```
+- Credential helper (hantera PAT/credentials):
+Windows: git config --global credential.helper manager
+macOS: git config --global credential.helper osxkeychain
+Linux (enkelt): git config --global credential.helper store
+
