@@ -11,13 +11,21 @@ echo "# Hello Git" > README.md
 ```
 
 2) Gör 3 logiska commits (t.ex. rubrik → avsnitt → rättning)
+Commit 1 – rubrik
 ```bash
 git add README.md
 git commit -m "docs: add title"
-echo "Intro text" >> README.md
+```
+Commit 2 – nytt avsnitt
+Öppna README.md i valfri editor (t.ex. VS Code/Notepad/TextEdit), lägg till en rad (t.ex. Intro text) och spara.
+```bash
 git add README.md
 git commit -m "docs: add intro section"
-sed -i '' 's/Intro/Introduction/' README.md  # macOS (använd valfri editor)
+```
+
+Commit 3 – liten rättning
+Öppna README.md igen, ändra en formulering (t.ex. “Intro” → “Introduction”) och spara.
+```bash
 git add README.md
 git commit -m "docs: fix wording in intro"
 ```
