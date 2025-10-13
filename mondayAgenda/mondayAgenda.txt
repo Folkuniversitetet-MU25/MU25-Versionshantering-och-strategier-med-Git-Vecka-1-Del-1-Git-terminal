@@ -26,10 +26,10 @@ Förstå “modified / staged / committed” och kunna läsa git status.
 
 – Uppstart
   - Genomgång av kursplan.
-  - Genomgång av kursplaneringen i Azomo, schema och      bedömningsformer
+  - Genomgång av kursplaneringen i Azomo, schema och bedömningsformer
 
 - Kartläggning: Stafettpinnen -“Vad kan ni om Git?” 
-Har du använt: Git? GitHub? Terminal? Skapat repo själv?
+Vad/hur har du använt tidigare: Git? Terminal? Skapat repo själv?
 
 Berätta hur jag tänkter om kursen, (Liten kurs men kan fyllas på med väldigt mycket men jag kunnat ta med ännu mera, vi har begränsad tid för agilt.)
 
@@ -42,7 +42,6 @@ Berätta hur jag tänkter om kursen, (Liten kurs men kan fyllas på med väldigt
 – Självständiga övningar
 
 – Sammanfattning & Preview
-
 
 --------------------------------------------------
 --------------------------------------------------
