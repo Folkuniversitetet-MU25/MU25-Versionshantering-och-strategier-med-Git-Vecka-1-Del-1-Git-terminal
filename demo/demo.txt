@@ -1,0 +1,92 @@
+💻 Demo 1 – “Skapa & merga en feature-branch”
+Skapa en ny mapp och initiera ett Git-repo. -> Göra commit, skapar feature-branch, göra ändring -> merga in den i main.
+
+# 1) Skapa och gå in i arbetsmappen
+mkdir git-w1d2 && cd git-w1d2
+
+# 2) Initiera repo
+git init
+git status   # visa 'On branch master/main' och att inget är trackat
+
+# 3) Skapa en första fil och commit på main
+echo "# Lektion 2" > README.md
+git add README.md
+git commit -m "Add README"
+
+# 4) Skapa och BYT till feature-branch i ett svep
+git switch -c feature/hello
+
+# 5) Gör en ändring på feature-branchen
+echo "Hello from feature branch" >> README.md
+git add README.md
+git commit -m "Append hello section"
+
+# 6) Tillbaka till main och MERGE in feature
+git switch main
+git merge feature/hello
+
+# 7) Visa historiköversikt
+git log --oneline --graph --decorate --all
+
+-----------------------------
+
+💻 Demo 2 – “GitHub: skapa repo, koppla, push (PAT vid behov)”
+Koppla mitt lokala repo till GitHub från ett tomt repo från Github.
+
+# 1) Koppla remote (origin) till GitHub-repot
+git remote add origin https://github.com/<user>/<repo>.git
+
+# 2) Se till att main heter main (om det behövs)
+git branch -M main
+
+# 3) Första push + sätt upstream (-u)
+git push -u origin main
+
+“-u betyder ‘sätt upstream’, så nästa gång räcker git push utan extra argument.”
+
+----------------------------
+
+Självständiga övningar finns i exercises mappen
++
+Studenterna gör Slide 62–63 övningarna (terminal & staging) i egen takt.
+
++ 
+Lätt
+
+git init → skapa main.
+
+Skapa feature/update-readme, ändra en rad, commit.
+
+git switch main → git merge feature/update-readme.
+
+Skapa GitHub-repo och pusha.
+
+Medel
+
+Skapa två brancher: feature/alpha och feature/beta från main.
+
+Ändra samma rad i index.html olika i varje branch, committa i båda.
+
+Merga feature/alpha → main (ska gå).
+
+Merga feature/beta → main → läs konfliktmarkörer (<<<<<<<, =======, >>>>>>>).
+
+Lös i VS Code (Accept Current/Incoming), git add, git commit, git push.
+
+Skriv 3 meningar om orsak, lösning, förebyggande.
+
+Svår (mini-team)
+
+Person A skapar GitHub-repo (main skyddad via Branch protection).
+
+Övriga klonar. Var och en skapar egen feature-branch: feature/<namn>-section.
+
+Implementera liten del (t.ex. navbar/hero/footer).
+
+Öppna PR mot dev (inte main). 1 review krävs.
+
+Merga till dev, sedan PR dev → main.
+
+Lägg till i README: teamets branch-/PR-konventioner (2–4 punkter).
+
+Extra: kör git log --oneline --graph --decorate --all, ta skärmdump och lägg i README.
