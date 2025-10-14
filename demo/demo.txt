@@ -90,3 +90,16 @@ Merga till dev, sedan PR dev → main.
 Lägg till i README: teamets branch-/PR-konventioner (2–4 punkter).
 
 Extra: kör git log --oneline --graph --decorate --all, ta skärmdump och lägg i README.
+
+-----------------------------
+Snabb felsökning (skriv upp på tavlan)
+
+- Fel branch? → git branch --show-current, git status.
+
+- “Min branch syns inte på GitHub” → git push -u origin <branch>.
+
+- “Push rejected” (repo innehöll README) → git pull --rebase origin main → försök igen.
+
+- PAT fungerar inte → fel scope/utgånget token. Skapa nytt (fine-grained mot repo).
+
+- Kaos vid merge → andas, öppna filen, ta bort markörer, välj innehåll, add + commit.
