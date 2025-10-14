@@ -1,0 +1,883 @@
+🧭 Lektion 2, workshop – Branching & GitHub (solo → teamflöde)
+
+⏰ Tid: ca 3h
+📚 Kurs: Versionshantering med Git & GitHub
+📅 Vecka 1, Del 2 (tis 14 okt, 13:00–16:00)
+
+--------------------------------------------------
+--------------------------------------------------
+
+🎯 Lektionsmål
+
+Förklara vad branching är och när man skapar en feature-branch.
+
+Namnge brancher med konsekvent konvention (kebab-case + typ/scope).
+
+Skapa, byta och merga grenar: switch, merge, lösa enkla konflikter.
+
+Förstå skillnaden mellan HEAD och main samt hur HEAD rör sig.
+
+Skapa GitHub-repo, ansluta/klona och pusha (inkl. PAT vid behov).
+
+Köra vardagsflödet: init → add → commit → log → branch → merge → push.
+
+--------------------------------------------------
+--------------------------------------------------
+
+📝 Lektionsplanering (3 timmar)
+
+– Uppstart
+
+Kort recap från måndag: modified → staged → committed → push.
+
+Dagens fokus: branching, merge, GitHub remote
+
+– PowerPoint & Teori (Slides 27–63)
+
+Kör enligt talarmanus nedan (kompletterade slides ingår).
+
+– Demo 1 – “Skapa & merga en feature-branch”
+
+Från main: git switch -c feature/hello → ändra fil → commit → git switch main → git merge feature/hello.
+
+– Demo 2 – “GitHub: skapa repo, koppla, push (PAT)”
+
+Skapa repo på github.com → remote add origin → push -u origin main.
+
+Visa PAT-flöde om prompten ber om lösenord.
+
+– Code-Along 
+
+Klassen följer: init → add → commit → log → branch → merge + koppla till GitHub.
+
+– Självständiga övningar 
+
+Nivå: lätt / medel / svår (se längre ned).
+
+– Sammanfattning & Preview
+
+Vanliga fallgropar + nästa steg (PR, review, dev-branch).
+
+--------------------------------------------------
+--------------------------------------------------
+
+📢 PowerPoint – Talarmanus (Slides 27–63)
+
+--------------------------------------------------
+
+### Slide 28
+
+**Titel:** Branching
+
+**Innehåll:**
+
+Saknas
+
+**Talarmanus:**
+När du väl behärskar commits, är nästa steg branching.
+Det låter dig arbeta med flera versioner av ditt projekt samtidigt – utan att störa varandra/main.
+
+En branch är som en parallell verklighet för din kod där du kan testa tryggt och fritt, feature/bugfix.
+
+---
+
+### Slide 29
+
+**Titel:** Nyckelbegrepp: Branches
+
+**Innehåll:**
+
+Alla commit i git tillhör någon gren (branch).
+Det kan finnas väldigt många grenar.
+Huvudgrenen i ett projekt kallas oftast main.
+
+**Talarmanus:**
+Varje commit i Git tillhör en branch.
+
+Brancher gör det möjligt att utveckla nya funktioner utan att röra den stabila versionen i main.
+
+Det är vanligt att ha flera brancher: `main` för produktion, `dev` för utveckling, och egna feature-brancher för specifika uppgifter.
+
+Kom ihåg: Små merges ofta.
+
+---
+
+### Slide 30
+
+**Titel:** Vad är en branch?
+
+**Innehåll:**
+
+Om versionshantering är som ett träd, då är varje branch en gren som går ut från stammen.
+Alla Git-repon börjar med branchen main.
+Skapa en branch i terminalen med kommandot: git branch.
+Byt version av alla filer i repot till en annan branch med git switch.
+git branch new-branch
+git switch new-branch
+
+**Talarmanus:**
+Tänk dig att koden är ett träd. Stammen är `main`, och varje gren som växer ut är en `branch`.
+
+Du skapar en ny branch med `git branch new-branch` och byter till den med `git switch new-branch`.
+Eller med: Skapa+byt: git switch -c new-branch.
+
+Det betyder att du kan experimentera fritt utan att påverka koden på main – perfekt för features, bugfixar eller tester.
+
+---
+
+### Slide 31
+
+**Titel:** Dåliga branchnamn
+
+**Innehåll:**
+
+feature ← Alldeles för generellt!
+DettaÄrEnBranch ← använd kebab-case i stället.
+Davids-branch ← det är inte din branch!
+Teamet äger koden tillsammans.
+Vem som helst i teamet ska kunna gå in i branchen där du jobbar och committa, om det behövs.
+
+**Talarmanus:**
+Namnge brancher tydligt och konsekvent.
+
+Använd `kebab-case` (små bokstäver + bindestreck).
+Ex: feature/login-form, bugfix/navbar-hover.
+
+Undvik att döpa dem efter personer – koden ägs gemensamt.
+
+Ett bra branchnamn berättar vad som pågår, till exempel `feature/login-form` eller `bugfix/navbar-hover`.
+
+---
+
+### Slide 32
+
+**Titel:** Saknas
+
+**Innehåll:**
+
+Kan inte läsa/tolka informationen / Bild
+
+**Talarmanus:**
+
+---
+
+### Slide 33
+
+**Titel:** Saknas
+
+**Innehåll:**
+
+Saknas
+
+**Talarmanus:**
+
+---
+
+### Slide 34
+
+**Titel:** Main
+
+**Innehåll:**
+
+Kan inte läsa/tolka informationen / Bild
+
+**Talarmanus:**
+
+---
+
+### Slide 35
+
+**Titel:** Branches (merge)
+
+**Innehåll:**
+
+En branch utgår alltid från sin parent.
+När man är färdig med en branch, ska ändringarna kombineras med parent branch – detta kallas merge.
+Eftersom andra kan ha gjort ändringar i filerna, medan man jobbade i branchen, måste man arbeta strukturerat.
+
+**Talarmanus:**
+När du är klar i din branch vill du slå ihop dina ändringar tillbaka till huvudgrenen – det kallas att _merga_.
+
+Om andra har ändrat samma kod samtidigt kan konflikter uppstå.
+Git hjälper dig att lösa dem, men det kräver att du håller dina brancher uppdaterade.
+
+Ett tips: merge ofta, vänta inte i veckor – då blir det smidigt.
+Före merge: uppdatera parent (git switch main && git pull). Merga feature. Lös konflikter lugnt.
+---
+
+### Slide 36
+
+**Titel:** Vad är en feature?
+
+**Innehåll:**
+
+En del av appens kod
+Något som krävs för att bygga det kunden vill ha
+Relativt oberoende av andra delar av koden
+Uppskattad tidsåtgång: några timmar till några dagar
+
+En feature kan innehålla deluppgifter med nyttig kod, som kollegor behöver få tillgång till
+Deluppgift A
+Deluppgift B
+Deluppgift C
+Feature
+
+**Talarmanus:**
+I ett projekt delas arbetet ofta upp i features – mindre, självständiga delar av appen.
+
+Exempel: en login-funktion, en produktlista, ett kontaktformulär.
+En feature ska helst gå att bygga på 0,5–2 dagar och testas separat innan den mergas till main.
+
+---
+
+### Slide 37
+
+**Titel:** Hur arbetar utvecklare?
+
+**Innehåll:**
+
+Team på upp till 10 utvecklare – alla jobbar med olika versioner av koden.
+Var och en har ansvar för en feature.
+När man är färdig med en feature så väljer man en ny att arbeta med.
+Så fort man har producerat "nyttig" kod ska man dela med sig av den till sina kollegor i teamet
+Man släpper nya versioner av appen regelbundet
+
+Exempel: Visual Studio Code släpper nya releaser varje månad. Google Chrome arbetar med 4 veckor mellan stora releaser.
+
+**Talarmanus:**
+I ett riktigt team jobbar flera utvecklare parallellt på olika brancher.
+
+Alla ansvarar för sina features och delar sedan tidigt "nyttig" kod genom pull requests.
+
+Det gör att utvecklingen flyter på snabbt, och ingen sitter fast i väntan på någon annan.
+
+---
+
+### Slide 38–39
+
+**Titel:** Hur ser ett typiskt projekt ut?
+
+**Innehåll:**
+
+En massa commits som är sammankopplade på någon gren i något repository.
+
+De följande illustrationerna är tagna från
+
+- https://marklodato.github.io/visual-git-guide/index-en.html
+- Det är också en bra resurs att lära sig mer om Git
+
+Tiden går framåt
+
+**Talarmanus:**
+Ett Git-projekt består av commits som hänger ihop i ett nätverk av brancher.
+
+När tiden går skapas nya commits på olika grenar, och ibland mergas de ihop.
+
+Visa gärna bilden visuellt för att förklara hur historiken växer som ett träd över tid.
+
+---
+
+### Slide 40
+
+**Titel:** Vad är HEAD?
+
+**Innehåll:**
+
+- Oftast – det stämmer inte alltid
+  Tiden går framåt
+
+**Talarmanus:**
+HEAD är Git:s sätt att markera var du nuvarande befinner dig i historiken just nu.
+
+Oftast pekar den på den senaste committen, men du kan flytta den bakåt när du checkar ut gamla versioner.
+
+Förståelsen av HEAD är central för att kunna navigera och felsöka i Git.
+
+“Detached HEAD” – vad betyder det?
+
+HEAD = din “pekare” som visar var du står i historiken. Normalt pekar den på senaste commit i en branch (t.ex. main).
+
+Detached HEAD uppstår när du checkar ut en specifik commit (t.ex. git checkout <commit-hash>) i stället för en branch.
+Då står du “direkt på en commit”. Nya commits du gör där hör inte till någon branch → de kan bli “löst hängande”.
+
+Hur undviker man problem? Om du råkat hamna i detached HEAD och vill jobba vidare: skapa en branch därifrån:
+git switch -c fix/detached-to-branch
+
+Kort sagt: i dagens flow använder vi git switch <branch> → ingen detached HEAD.
+
+---
+
+### Slide 41
+
+**Titel:** Vad är MAIN?
+
+**Innehåll:**
+Huvudgrenen i ditt projekt.
+Den behöver inte heta main, men det är numera standard.
+
+**Talarmanus:**
+`main` är den primära grenen i nästan alla moderna Git-projekt.
+
+Det är där den färdiga, stabila koden bor – det som i slutändan hamnar i produktion.
+
+Den hette tidigare `master`, men GitHub och andra plattformar bytte till `main` för att göra namngivningen mer inkluderande.
+
+När du skapar ett nytt repo idag blir `main` alltid standardgrenen automatiskt.
+
+---
+
+### Slide 42
+
+**Titel:** Nyckelbegrepp: skapa grenar ut från main
+
+**Innehåll:**
+
+Startpunkten för en förgrening är en specifik commit.
+När du vill göra ändringar i ett projekt börjar du vanligtvis med att skapa en gren.
+Sedan kan du jobba i din gren utan att störa eller påverkas av andra.
+
+**Talarmanus:**
+Varje ny branch börjar i en specifik commit, oftast från `main`.
+
+Det här gör att du kan isolera ditt arbete, oavsett om du testar en ny feature eller en buggfix.
+
+När du är klar mergar du tillbaka till main, så teamet får ta del av dina ändringar.
+
+Poängen: du stör aldrig någon annans kod förrän du själv väljer att dela den.
+
+---
+
+### Slide 43
+
+**Titel:** Nyckelbegrepp: skapa grenar ut från main
+
+**Innehåll:**
+
+Bilder lånade från [https://codingdomain.com/git/merging/](https://codingdomain.com/git/merging/)
+
+**Talarmanus:**
+Visa här hur grenarna växer ut från en commit.
+
+Peka på bilden och förklara: varje gång du gör en ny branch, sparas en referens till committen du utgick från.
+
+När du mergar tillbaka slås historikerna ihop.
+
+Det är precis så team kan jobba parallellt utan att skriva över varandras kod.
+
+---
+
+### Slide 44
+
+**Titel:** MASTER har bytt namn
+
+**Innehåll:**
+
+På grund av politisk korrekthet har GitHub nu ändrats.
+Huvudgrenen i ett repo heter numera MAIN.
+Gäller för alla nyskapade repon.
+De gamla lever kvar som tidigare.
+
+**Talarmanus:**
+Tidigare hette standardgrenen `master`, men numera heter den `main`.
+
+Det här är bara en namnändring – inget tekniskt har förändrats.
+
+Om du jobbar med äldre projekt kan du fortfarande stöta på `master`, men nya repon använder alltid `main` som standard.
+
+---
+
+### Slide 45
+
+**Titel:** Nyckelbegrepp: Merging (sammanslagning)
+
+**Innehåll:**
+
+När du är klar med dina ändringar, tryck tillbaka dem till master.
+
+**Talarmanus:**
+Merging betyder att du för in dina ändringar från en branch till en annan – oftast in i `main`.
+
+Det är så ny funktionalitet blir en del av den färdiga appen.
+
+Det kan ibland uppstå konflikter, men vi kommer snart se hur man löser dem.
+
+Det viktigaste är att alltid mergea små och ofta – det minimerar konflikter.
+
+Bra PR-beskrivning: vad ändras + hur testar man.
+
+---
+
+### Slide 46
+
+**Titel:** Nyckelbegrepp: hur gör man en commit?
+
+**Innehåll:**
+
+En fil kan finnas i flera tillstånd och platser:
+Lokalt på din dator i arbetskatalogen (working directory).
+När en fil är klar att läggas till en commit lägger du den till staging.
+
+- Kallades tidigare index – den termen används fortfarande ibland
+- Staging Area är platsen där man samlar ihop all personal och utrustning innan uppdraget startar – från början en militär term.
+
+**Talarmanus:**
+När du jobbar med Git rör sig filerna mellan olika tillstånd.
+
+Först ändrar du dem i din mapp (working directory).
+
+Sedan lägger du till dem i staging (med `git add`), och när allt ser bra ut skapar du en commit.
+
+Det är som att skriva ut kvittot – en sparad version i din historik.
+
+---
+
+### Slide 47
+
+**Titel:** Nyckelbegrepp: hur gör man en commit?
+
+**Innehåll:**
+
+Processen:
+Gör några ändringar i en fil.
+Använd kommandot `git add` för att lägga till filen i staging.
+Använd kommandot `git commit` för att skapa en ny commit.
+
+**Talarmanus:**
+Visa detta live i terminalen om möjligt.
+
+Redigera en fil, kör `git status` för att se att den är modifierad, `git add` för att lägga till den, och sedan `git commit -m "Förklarande meddelande"`.
+
+Förklara att `-m` betyder message och att meddelandet ska kort förklara vad committen gör – inte varför, utan _vad_.
+
+---
+
+### Slide 48
+
+**Titel:** Nyckelbegrepp: hur gör man en commit?
+
+**Innehåll:**
+
+Saknas
+
+**Talarmanus:**
+
+---
+
+### Slide 49
+
+**Titel:** Nyckelbegrepp: hur gör man en commit?
+
+**Innehåll:**
+
+Saknas
+
+**Talarmanus:**
+
+---
+
+### Slide 50
+
+**Titel:** Vad är GitHub?
+
+**Innehåll:**
+
+[www.github.com](http://www.github.com)
+Den största leverantören av webb-baserade Git-repositories.
+Har remote repositories.
+Gör det möjligt att samarbeta online.
+Ger funktionalitet ovanpå Git – UI, dokumentation, felspårning, ändringsbegäran, projektstyrning mm.
+
+**Talarmanus:**
+GitHub är en plattform där vi kan lagra våra Git-repon i molnet.
+
+Det gör samarbete mycket enklare – vi kan dela kod, öppna pull requests, kommentera commits och spåra buggar.
+
+GitHub = remote + samarbetslager. UI hjälper – men terminalen räddar när det skiter sig.
+
+---
+
+### Slide 51
+
+**Titel:** Vad är GitHub? (fortsättning)
+
+**Innehåll:**
+
+Startade 2008.
+Ägs numera av Microsoft.
+Har en gratisversion och en enterpriseversion för företag.
+
+**Talarmanus:**
+GitHub startade 2008 och köptes senare av Microsoft.
+
+De erbjuder gratis konton för öppna projekt, men företag använder ofta betalda enterpriseversioner för intern kod.
+
+Det är samma teknik – skillnaden är bara i säkerhet och åtkomstkontroll.
+
+---
+
+### Slide 52
+
+**Titel:** GitHub i Visual Studio
+
+**Innehåll:**
+
+Visual Studio har inbyggt Git-stöd.
+Man kan skapa, commit:a, pusha och mergea direkt i gränssnittet.
+Dock är det viktigt att förstå Git i grunden för att kunna lösa problem.
+
+**Talarmanus:**
+Visual Studio och VS Code har båda inbyggt stöd för Git.
+
+Det gör vardagen enklare – du kan se diffar, mergea visuellt och skapa PR:er direkt i editorn.
+
+Men: förstå alltid vad som händer under huven.
+Om något går fel, är det terminalen som räddar dig.
+
+---
+
+### Slide 53
+
+**Titel:** Github: Skapa repository och anslut
+
+**Innehåll:**
+
+Saknas
+
+Skapa repo → git remote add origin <URL> → git push -u origin main.
+(“-u sätter upstream. Nästa gång räcker git push.”)
+---
+
+### Slide 54
+
+**Titel:** GitHub - skapa repository
+
+**Innehåll:**
+
+Kan inte läsa/tolka informationen / Bild
+
+**Talarmanus:**
+
+---
+
+### Slide 55
+
+**Titel:** GitHub - skapa repo
+
+**Innehåll:**
+
+Kan inte läsa/tolka informationen / Bild
+
+**Talarmanus:**
+
+---
+
+### Slide 56
+
+**Titel:** GitHub - skapa repo
+
+**Innehåll:**
+
+Kan inte läsa/tolka informationen / Bild
+
+**Talarmanus:**
+
+---
+
+### Slide 57
+
+**Titel:** GitHub – anslut till lokalt repo
+
+**Innehåll:**
+
+Kopiera in raderna en i taget i terminalen:
+`git remote add origin <URL>` kopplar ditt lokala repo till GitHub.
+`git push -u origin main` skickar upp commits till fjärren.
+
+**Talarmanus:**
+När du har skapat ditt repo på GitHub behöver du länka det till ditt lokala projekt.
+
+`git remote add origin` skapar kopplingen, och `git push -u origin main` laddar upp din kod.
+
+Efter det räcker det med `git push` framöver – Git vet var fjärren finns.
+
+---
+
+### Slide 58
+
+**Titel:** Eller….
+
+**Innehåll:**
+
+Saknas
+
+---
+
+### Slide 59
+
+**Titel:** Skapa ett nytt repository
+
+**Innehåll:**
+
+Öppna Utforskaren
+Skapa en mapp där du vill jobba
+
+- Undermappar går bra
+  Högerklicka på mappen
+  Välj Git Bash here
+  Nu kan vi börja
+
+---
+
+  ### Slide 60
+
+**Titel:** Skapa ett nytt repository
+
+**Innehåll:**
+
+Med Git bash i din övningsmapp skriver du git init
+Då skapas ett nytt lokalt git repository
+
+---
+
+### Slide 61
+
+**Titel:** Skapa en klon av ett existerande repository
+
+**Innehåll:**
+
+I din arbetskatalog skriver du
+git clone https://github.com/<adress till repo>
+Om du vill klippa-och-klistra, så klistrar du i git bash med höger musknapp
+
+**Talarmanus:**
+Det finns två sätt att börja:
+
+1. `git init` – för nya projekt.
+2. `git clone` – för att hämta ett befintligt.
+   GitHub är din fjärrserver.
+   Allt lokalt arbete kan synkas dit för backup, samarbete och historik.
+
+Ny kodbas? Klona. Eget lokalt? remote add + push.
+
+---
+
+### Slide 62
+
+**Titel:** Öva på git
+
+**Innehåll:**
+
+Gå till https://coderefinery.github.io/git-intro/basics/
+Läs och gör övningarna:
+Basics
+Branching and merging
+Läs allt under rubriken "Git". Börja med nr 2, Git workflow.
+https://github.com/lejonmanen/git-instruktion#git-instruktion
+Git flow summary table: https://github.com/foundersandcoders/..../git-flow-summary-table.png
+
+---
+
+### Slide 63
+
+**Titel:** Övning
+
+**Innehåll:**
+
+1 Skapa ett nytt git-repo. Kontrollera att du får en branch med namnet "main".
+2 Skapa en ny branch med namnet "dev". Byt till den nya branchen.
+3 Skapa en ny branch med namnet "change-feature". Byt till den.
+4 Skapa en ny fil, change.txt. Skriv några valfria rader inuti den. Lägg till och committa.
+5 Byt tillbaka till "dev". Vad ska hända med change.txt?Dra över ändringen (versionen som du committade i steg 4) med git merge och kontrollera vad som hände.
+
+**Talarmanus:**
+Nu får ni testa hela flödet i praktiken:
+Initiera ett repo, skapa brancher, gör commits och mergea ihop.
+Här får ni känna på vad som händer när ni byter branch och varför merge är så centralt.
+Fokusera på att förstå logiken – inte bara memorera kommandon.
+
+--------------------------------------------------
+--------------------------------------------------
+
+“Nu startar vi från en tom mapp. Jag kör Git Bash, men ni kan använda terminalen i VS Code också. Målet: skapa repo, göra en feature-branch, merga till main.”
+
+Du gör:
+Öppna VS Code → Open Folder… → välj en plats där du vill skapa övningsmappen (t.ex. C:\Mandus\GitLessons).
+
+I VS Code: Terminal → New Terminal (eller öppna Git Bash separat och cd dit du vill vara).
+
+💻 Demo 1 – “Skapa & merga en feature-branch”
+
+“Jag börjar med att skapa en ny mapp och initiera ett Git-repo. Sen gör jag första commit på main, skapar en feature-branch, gör en ändring där, och mergar tillbaka till main.”
+
+Kommandon (kör i terminalen, visa output):
+
+# 1) Skapa och gå in i arbetsmappen
+mkdir git-w1d2 && cd git-w1d2
+
+# 2) Initiera repo
+git init
+git status   # visa 'On branch master/main' och att inget är trackat
+
+# 3) Skapa en första fil och commit på main
+echo "# Lektion 2" > README.md
+git add README.md
+git commit -m "Add README"
+
+# 4) Skapa och BYT till feature-branch i ett svep
+git switch -c feature/hello
+
+# 5) Gör en ändring på feature-branchen
+echo "Hello from feature branch" >> README.md
+git add README.md
+git commit -m "Append hello section"
+
+# 6) Tillbaka till main och MERGE in feature
+git switch main
+git merge feature/hello
+
+# 7) Visa historiköversikt
+git log --oneline --graph --decorate --all
+
+Säg under tiden (punkter att nämna):
+
+git switch -c feature/hello = skapar och byter branch.
+
+“Jag jobbar tryggt i min feature utan att påverka main.”
+
+“När jag är klar byter jag tillbaka till main och kör git merge feature/hello.”
+
+“git log --oneline --graph --decorate --all visar grenarna och var HEAD är.”
+
+Om någon får “nu händer inget vid merge”: du står kanske redan på feature-branch. “Mergar gör vi in i den branch vi vill uppdatera (oftast main).”
+
+--------------------------------------------------
+--------------------------------------------------
+
+💻 Demo 2 – “GitHub: skapa repo, koppla, push (PAT vid behov)”
+
+Talarmanus:
+
+“Nu kopplar jag mitt lokala repo till GitHub så vi kan samarbeta och ha backup. Jag skapar ett tomt repo på GitHub och pushar upp main.”
+
+Du gör (i webbläsaren):
+Gå till github.com → klicka + New → skapa repo (namn t.ex. git-w1d2), låt det vara tomt (ingen README/licens/gitignore för enklaste push).
+
+Kopiera HTTPS-URL för repot.
+
+Kommandon (i terminalen):
+
+# 1) Koppla remote (origin) till GitHub-repot
+git remote add origin https://github.com/<user>/<repo>.git
+
+# 2) Se till att main heter main (om det behövs)
+git branch -M main
+
+# 3) Första push + sätt upstream (-u)
+git push -u origin main
+
+Säg under tiden:
+
+“-u betyder ‘sätt upstream’, så nästa gång räcker git push utan extra argument.”
+
+“Om Git ber om inloggning dyker ofta Credential Manager eller webbinloggning upp. Godkänn där.”
+
+“Om den i stället ber om password i terminalen: GitHub accepterar inte vanliga lösenord. Då skapar jag en Personal Access Token (PAT).”
+
+PAT – snabbsnack (om behövs):
+“GitHub → Avatar (uppe till höger) → Settings → Developer settings →
+Fine-grained tokens (välj repo + Contents read/write) eller Tokens (classic) med repo scope → Generate → kopiera.
+När terminalen ber om ‘password’ vid push: klistra in PAT.”
+
+Visa (snabb reality-check):
+Öppna repot på GitHub och peka: “Här är README.md, här är historiken – detta är vår fjärr, origin.”
+
+--------------------------------------------------
+
+🧑‍💻 Code-Along (Vid mån av tid)
+
+“Nu gör vi samma sak tillsammans. Jag pausar efter varje steg och hjälper den som kör fast.”
+
+Checklista att visa:
+1. init i tom mapp → första commit.
+
+2. switch -c feature/change-title → ändra README-titel → commit.
+
+3. switch main → merge feature/change-title.
+
+4. Skapa GitHub-repo → git remote add origin <url> → git push -u origin main.
+
+5. Bonus: git log --oneline --graph --decorate --all.
+
+(nyttiga tips):
+
+“Kör alltid git status om ni är osäkra – det är er GPS.”
+
+“Ändra → git add → git commit = tre tydliga steg.”
+
+“Stå på rätt branch när ni mergar (oftast main).”
+
+“Får ni ‘rejected’ vid push? Kanske råkade ni skapa GitHub-repo med README. 
+Lösning: git pull --rebase origin main → sen git push.”
+
+--------------------------------------------------
+--------------------------------------------------
+
+🧠 Självständiga övningar finns i exercises mappen
++
+Studenterna gör Slide 62–63 övningarna (terminal & staging) i egen takt.
+
++ 
+Lätt
+
+git init → skapa main.
+
+Skapa feature/update-readme, ändra en rad, commit.
+
+git switch main → git merge feature/update-readme.
+
+Skapa GitHub-repo och pusha.
+
+Medel
+
+Skapa två brancher: feature/alpha och feature/beta från main.
+
+Ändra samma rad i index.html olika i varje branch, committa i båda.
+
+Merga feature/alpha → main (ska gå).
+
+Merga feature/beta → main → läs konfliktmarkörer (<<<<<<<, =======, >>>>>>>).
+
+Lös i VS Code (Accept Current/Incoming), git add, git commit, git push.
+
+Skriv 3 meningar om orsak, lösning, förebyggande.
+
+Svår (mini-team)
+
+Person A skapar GitHub-repo (main skyddad via Branch protection).
+
+Övriga klonar. Var och en skapar egen feature-branch: feature/<namn>-section.
+
+Implementera liten del (t.ex. navbar/hero/footer).
+
+Öppna PR mot dev (inte main). 1 review krävs.
+
+Merga till dev, sedan PR dev → main.
+
+Lägg till i README: teamets branch-/PR-konventioner (2–4 punkter).
+
+Extra: kör git log --oneline --graph --decorate --all, ta skärmdump och lägg i README.
+
+--------------------------------------------------
+--------------------------------------------------
+
+🧯 Snabb felsökning (skriv upp på tavlan)
+
+- Fel branch? → git branch --show-current, git status.
+
+- “Min branch syns inte på GitHub” → git push -u origin <branch>.
+
+- “Push rejected” (repo innehöll README) → git pull --rebase origin main → försök igen.
+
+- PAT fungerar inte → fel scope/utgånget token. Skapa nytt (fine-grained mot repo).
+
+- Kaos vid merge → andas, öppna filen, ta bort markörer, välj innehåll, add + commit.
